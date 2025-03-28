@@ -1,0 +1,1 @@
+export type IMessageType = 'text' | 'image' | 'emoji' | 'gif';
