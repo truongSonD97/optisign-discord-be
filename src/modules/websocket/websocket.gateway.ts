@@ -63,7 +63,7 @@ export class WebSocketGatewayService implements OnGatewayConnection, OnGatewayDi
 
     // Save message to DB
     const savedMessage = await this.chatService.createMessage({roomId, senderId: user.id, content, type});
-
+    savedMessage.sender = user
     // Emit to everyone in the room
     this.server.to(roomId.toString()).emit('receiveMessage', savedMessage);
     console.log("send to client")
@@ -71,14 +71,25 @@ export class WebSocketGatewayService implements OnGatewayConnection, OnGatewayDi
 
 
   @SubscribeMessage('joinRoom')
-  handleJoinRoom(@MessageBody() room: string, @ConnectedSocket() client: Socket) {
-    const user = client.data.user;
+  handleJoinRoom(@MessageBody("roomId") roomId: string, @ConnectedSocket() client: Socket) {
+    console.log("🚀 ~ WebSocketGatewayService ~ handleJoinRoom ~ roomId:", roomId)
+    const user = (client as any).user;
     if (!user) {
       console.warn('WebSocket: Unauthenticated user attempted to join a room.');
       client.disconnect();
       return;
     }
-    client.join(room);
+    client.join(roomId.toString());
+    console.log(`Client ${user.id} joined room ${roomId}`)
     // client.emit('roomMessages', this.rooms[room] || []);
   }
+
+  @SubscribeMessage("leaveRoom")
+  handleLeaveRoom(
+  @MessageBody() { roomId, userId }: { roomId: number; userId: number },
+  @ConnectedSocket() client: Socket
+) {
+  client.leave(roomId.toString());
+  console.log(`User ${userId} left room ${roomId}`);
+}
 }

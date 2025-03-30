@@ -28,7 +28,7 @@ export class AuthService {
       throw new Error('Invalid credentials');
     }
     delete user.password
-    return { access_token: this.jwtService.sign({ id: user.id, username: user.username }), user };
+    return { access_token: this.jwtService.sign({ id: user.id, username: user.username,name:user.name }), user };
   }
 
   verifyToken = (token: string) => {

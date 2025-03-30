@@ -22,6 +22,8 @@ export class MessagesService {
   async getMessages(roomId: number, before?: string, existingIds?: number[]) {
     let query = this.messageRepo
       .createQueryBuilder("message")
+      .innerJoin("message.sender","sender")
+      .addSelect(["sender.id","sender.name"])
       .where("message.roomId = :roomId", { roomId })
       .orderBy("message.createdAt", "DESC") // Fetch newest first
       .take(20); // Load 20 messages per request

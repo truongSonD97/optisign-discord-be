@@ -3,10 +3,10 @@ import { Room } from './room.entity';
 import { Reaction } from './reaction.entity';
 import { User } from './user.entity';
 import { IMessageType } from 'src/interfaces/IMessageType';
-import { BaseEntity } from './base.entity';
+import { MessageBaseColumn } from './base.entity';
 
 @Entity()
-export class Message extends BaseEntity {
+export class Message extends MessageBaseColumn {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -31,6 +31,5 @@ export class Message extends BaseEntity {
 
   @OneToMany(() => Reaction, (reaction) => reaction.message)
   reactions: Reaction[];
-
 
 }
