@@ -11,8 +11,13 @@ async function bootstrap() {
   const configService = app.get(ConfigService<AllConfigType>);
   app.useGlobalPipes(new ValidationPipe({}));
   const port = configService.getOrThrow('app.port', { infer: true });
-  const reflector = app.get(Reflector);
+  // const reflector = app.get(Reflector);
   // app.useGlobalGuards(new RolesGuard(reflector));
+  app.enableCors({
+    origin: "http://localhost:3000", // Allow frontend domain
+    credentials: true, // Allow cookies if needed
+  });
+
   await app.listen(port);
   console.log(
     '\x1b[32m%s\x1b[0m',

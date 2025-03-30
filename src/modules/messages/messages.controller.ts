@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Param, Body } from '@nestjs/common';
+import { Controller, Post, Get, Param, Body, Query } from '@nestjs/common';
 import { MessagesService } from './messages.service';
 import { IMessageType } from 'src/interfaces/IMessageType';
 
@@ -12,7 +12,7 @@ export class MessagesController {
   }
 
   @Get(':roomId')
-  getMessages(@Param('roomId') roomId: number) {
-    return this.messagesService.getMessages(roomId);
+  getMessages(@Param('roomId') roomId: number, @Query("before") before:string) {
+    return this.messagesService.getMessages(roomId,before);
   }
 }

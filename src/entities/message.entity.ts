@@ -3,9 +3,10 @@ import { Room } from './room.entity';
 import { Reaction } from './reaction.entity';
 import { User } from './user.entity';
 import { IMessageType } from 'src/interfaces/IMessageType';
+import { BaseEntity } from './base.entity';
 
 @Entity()
-export class Message {
+export class Message extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,10 +24,13 @@ export class Message {
   @Index() // 
   room: Room;
 
-  @ManyToOne(() => User, { onDelete: 'CASCADE' }) // ✅ No need to link back to user
-  @JoinColumn({ name: 'userId' })
-  user: User;
+  // 🔥 Index for quick filtering by sender
+  @Index()
+  @ManyToOne(() => User, (user) => user.messages, { onDelete: 'CASCADE' })
+  sender: User;
 
   @OneToMany(() => Reaction, (reaction) => reaction.message)
   reactions: Reaction[];
+
+
 }

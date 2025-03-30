@@ -10,6 +10,7 @@ import { WebsocketModule } from './modules/websocket/websocket.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { MessagesModule } from './modules/messages/messages.module';
+import { RoomsModule } from './modules/rooms/rooms.module';
 
 
 // <database-block>
@@ -37,6 +38,7 @@ const infrastructureDatabaseModule =  TypeOrmModule.forRootAsync({
     UsersModule,
     AuthModule,
     MessagesModule,
+    RoomsModule
   ],
   controllers: [],
   providers: [],

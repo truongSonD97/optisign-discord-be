@@ -27,7 +27,20 @@ export class AuthService {
     if (!user || !(await bcrypt.compare(dto.password, user.password))) {
       throw new Error('Invalid credentials');
     }
-    console.log("🚀 ~ AuthService ~ login ~ user: PAss", user)
-    return { access_token: this.jwtService.sign({ id: user.id, username: user.username }) };
+    delete user.password
+    return { access_token: this.jwtService.sign({ id: user.id, username: user.username }), user };
+  }
+
+  verifyToken = (token: string) => {
+    try {
+      const decode = this.jwtService.verify(token);
+      return decode
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  async getMe(userId:number){
+    return await this.userRepo.findOne({where:{id:userId}, select:["id","username","name"]})
   }
 }

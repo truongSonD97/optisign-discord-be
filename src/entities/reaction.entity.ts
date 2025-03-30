@@ -1,8 +1,9 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { Message } from './message.entity';
+import { BaseEntity } from './base.entity';
 
 @Entity()
-export class Reaction {
+export class Reaction extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
