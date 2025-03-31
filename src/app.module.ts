@@ -12,6 +12,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MessagesModule } from './modules/messages/messages.module';
 import { RoomsModule } from './modules/rooms/rooms.module';
 import { AwsModule } from './modules/aws/aws.module';
+import { ReactionModule } from './modules/reactions/reactions.module';
 
 
 // <database-block>
@@ -40,7 +41,8 @@ const infrastructureDatabaseModule =  TypeOrmModule.forRootAsync({
     AuthModule,
     MessagesModule,
     RoomsModule,
-    AwsModule
+    AwsModule, 
+    ReactionModule
   ],
   controllers: [],
   providers: [],

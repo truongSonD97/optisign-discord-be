@@ -10,4 +10,4 @@ import { ReactionsService } from "./reactions.service";
   providers: [ReactionsService],
   exports: [ReactionsService],
 })
-export class MessagesModule {}
+export class ReactionModule {}
