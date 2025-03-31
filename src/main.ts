@@ -14,7 +14,7 @@ async function bootstrap() {
   // const reflector = app.get(Reflector);
   // app.useGlobalGuards(new RolesGuard(reflector));
   app.enableCors({
-    origin: "http://localhost:3000", // Allow frontend domain
+    origin: process.env.FRONTEND_DOMAIN, // Allow frontend domain
     credentials: true, // Allow cookies if needed
   });
 
