@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
-import { Like, Repository } from 'typeorm';
+import { Like, Not, Repository } from 'typeorm';
 import { AuthRegisterLoginDto } from './dtos/user.dto';
 
 @Injectable()
@@ -21,9 +21,9 @@ export class UsersService {
   }
 
     // 🔹 Search users by email when typing
-    async searchUsers(query: string): Promise<User[]> {
+    async searchUsers(user:User,query: string): Promise<User[]> {
       const users = await this.userRepository.find({
-        where: { name: !!query ? Like(`%${query}%`) : "1=1"  },
+        where: { name: !!query ? Like(`%${query}%`) : "1=1" ,id:Not(user.id) },
         take: 10, // Limit results for efficiency
         select:["id","username","name"]
       });
